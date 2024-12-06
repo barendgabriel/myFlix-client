@@ -1,4 +1,3 @@
-// src/index.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Use React 18+ import
 import './index.scss'; // Import your styles
@@ -30,7 +29,7 @@ const movies = [
 // App component with routing setup
 const App = () => {
   return (
-    <Router future={{ v7_startTransition: true }}>
+    <Router future={{ v7_relativeSplatPath: true }}>
       <Routes>
         {/* Define routing */}
         <Route path="/" element={<MainView movies={movies} />} />
