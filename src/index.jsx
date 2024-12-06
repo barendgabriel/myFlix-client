@@ -1,31 +1,24 @@
+// src/index.jsx
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; // Use new import for React 18+
 import './index.scss'; // Import your styles
-import { MovieList } from './components/MovieList';
+import { MainView } from './components/MainView/MainView'; // Import MainView
 
 const movies = [
-  {
-    title: 'Jurrassic Park',
-    genre: 'Thriller',
-  },
-  {
-    title: 'Godzilla',
-    genre: 'Comedy',
-  },
-  {
-    title: 'Evil Dead',
-    genre: 'Horror',
-  },
+  { title: 'Jurassic Park', genre: 'Thriller' },
+  { title: 'Godzilla', genre: 'Comedy' },
+  { title: 'Evil Dead', genre: 'Horror' },
 ];
+
 const App = () => {
   return (
     <div>
       <h1>Netflix</h1>
-      <div>
-        <MovieList movies={movies} />
-      </div>
+      <MainView movies={movies} /> {/* Pass movies to MainView */}
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Create root element and render App
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />); // Render App using createRoot
