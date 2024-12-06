@@ -1,5 +1,3 @@
-/* src/index.scss */
-
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif; /* Retro font-like */
@@ -111,11 +109,12 @@ h1 {
   color: #fff;
 }
 
-/* Remove redundant styles */
+/* Cleaned up General Styles */
 div {
-  padding: 20px;
+  padding: 20px; /* If you need padding for specific divs, consider targeting specific classes or IDs */
 }
 
+/* If button styling needs to be universal, this will suffice. Otherwise, you can remove or modify it */
 button {
   padding: 10px;
   background-color: #ffcc00;
