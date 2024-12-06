@@ -7,23 +7,33 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Im
 
 // Define some sample movie data
 const movies = [
-  { title: 'Jurassic Park', genre: 'Thriller' },
-  { title: 'Godzilla', genre: 'Comedy' },
-  { title: 'Evil Dead', genre: 'Horror' },
+  {
+    title: 'Jurassic Park',
+    genre: 'Thriller',
+    description: 'A thrilling dinosaur adventure.',
+    imagePath: 'jurassic-park.jpg',
+  },
+  {
+    title: 'Godzilla',
+    genre: 'Comedy',
+    description: 'A lighthearted monster tale.',
+    imagePath: 'godzilla.jpg',
+  },
+  {
+    title: 'Evil Dead',
+    genre: 'Horror',
+    description: 'A spine-chilling classic.',
+    imagePath: 'evil-dead.jpg',
+  },
 ];
 
 // App component with routing setup
 const App = () => {
   return (
     <Router>
-      {' '}
-      {/* Wrapping app with BrowserRouter */}
-      <h1>Netflix</h1>
       <Routes>
-        {' '}
         {/* Define routing */}
         <Route path="/" element={<MainView movies={movies} />} />
-        {/* You can add more routes here as needed */}
       </Routes>
     </Router>
   );
