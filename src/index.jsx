@@ -11,19 +11,19 @@ const movies = [
     title: 'Jurassic Park',
     genre: 'Thriller',
     description: 'A thrilling dinosaur adventure.',
-    imagePath: 'jurassic-park.jpg',
+    imagePath: 'jurassic-park.png',
   },
   {
     title: 'Godzilla',
     genre: 'Comedy',
     description: 'A lighthearted monster tale.',
-    imagePath: 'godzilla.jpg',
+    imagePath: 'godzilla.jpeg',
   },
   {
     title: 'Evil Dead',
     genre: 'Horror',
     description: 'A spine-chilling classic.',
-    imagePath: 'evil-dead.jpg',
+    imagePath: 'evil-dead.jpeg',
   },
 ];
 
