@@ -1,18 +1,24 @@
-// src/components/MovieDetails/MovieDetails.jsx
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export const MovieDetails = () => {
+export const MovieDetails = ({ movies }) => {
   const { title } = useParams();
+  const navigate = useNavigate(); // Use navigate for going back to the list
+
+  // Find the movie based on the title
+  const movie = movies.find((movie) => movie.title === title);
+
+  // If the movie is not found, show an error message
+  if (!movie) {
+    return <p>Movie not found!</p>;
+  }
 
   return (
     <div className="movie-details">
-      {' '}
-      {/* Add the movie-details class */}
-      <h2>{title}</h2>
-      <p>Genre: Thriller (or other genre based on movie title)</p>
-      <p>Some detailed description of the movie...</p>
-      <button>Back to List</button>
+      <h2>{movie.title}</h2>
+      <p>Genre: {movie.genre}</p>
+      <p>{movie.description}</p>
+      <button onClick={() => navigate('/')}>Back to List</button>
     </div>
   );
 };
