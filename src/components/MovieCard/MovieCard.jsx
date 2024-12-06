@@ -4,10 +4,10 @@ export const MovieCard = ({ movie }) => {
   return (
     <div>
       <h3>{movie.title}</h3>
-      {/* Display the movie image */}
+      {/* Correct image reference from the public folder */}
       <img
-        src={`/images/${movie.image}`} // Path to the images folder inside public
-        alt={`${movie.title} Poster`} // Accessible alt text with the movie title
+        src={`/images/${movie.image}`} // Path starting from the public folder
+        alt={`${movie.title} Poster`} // Alt text with movie title for accessibility
         style={{ width: '150px', height: 'auto' }} // Basic styling for the image
       />
     </div>
