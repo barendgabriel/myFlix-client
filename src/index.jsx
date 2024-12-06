@@ -30,7 +30,7 @@ const movies = [
 // App component with routing setup
 const App = () => {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true }}>
       <Routes>
         {/* Define routing */}
         <Route path="/" element={<MainView movies={movies} />} />
