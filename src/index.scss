@@ -1,44 +1,10 @@
-/* index.scss */
-
-/* Resetting default browser styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Basic body styling */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f9fa; /* Light gray background */
-  color: #212529; /* Dark text color */
-  line-height: 1.6;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
 }
 
-/* Basic link styling */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Basic button styling */
-button {
-  cursor: pointer;
-  background-color: #007bff; /* Blue button */
-  color: #fff; /* White text */
-  border: none;
-  padding: 0.5em 1em;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3; /* Darker blue */
-}
-
-/* Container for content alignment */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1em;
+h1 {
+  color: darkblue;
 }
