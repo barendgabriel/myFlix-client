@@ -16,13 +16,10 @@ export const MovieDetails = ({ movies }) => {
         <strong>Genre:</strong> {movie.genre}
       </p>
       <p>
-        <strong>Director:</strong> {movie.director} {/* Added director */}
-      </p>
-      <p>
         <strong>Description:</strong> {movie.description}
       </p>
       <img
-        src={`/images/${movie.imagePath}`}
+        src={`/images/${movie.imagePath}`} // Display the poster here
         alt={`${movie.title} Poster`}
         style={{ width: '300px', height: 'auto' }}
       />
