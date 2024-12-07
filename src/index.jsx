@@ -1,50 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.scss';
-import { MainView } from './components/MainView/MainView';
-import { MovieDetails } from './components/MovieDetails/MovieDetails'; // Import MovieDetails
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-const movies = [
-  {
-    title: 'Jurassic Park',
-    genre: 'Thriller',
-    description: 'A thrilling dinosaur adventure.',
-    director: 'Steven Spielberg', // Added director
-    imagePath: 'jurassic-park.png',
-  },
-  {
-    title: 'Godzilla',
-    genre: 'Comedy',
-    description: 'A lighthearted monster tale.',
-    director: 'Ishirō Honda', // Added director
-    imagePath: 'godzilla.jpeg',
-  },
-  {
-    title: 'Evil Dead',
-    genre: 'Horror',
-    description: 'A spine-chilling classic.',
-    director: 'Sam Raimi', // Added director
-    imagePath: 'evil-dead.jpeg',
-  },
-];
+export const MovieDetails = ({ movies }) => {
+  const { movieTitle } = useParams(); // Get the movieTitle from the URL
+  const movie = movies.find((m) => m.title === decodeURIComponent(movieTitle)); // Match the movie
 
-const App = () => {
+  if (!movie) {
+    return <div>Movie not found!</div>; // Handle missing movie
+  }
+
   return (
-    <Router>
-      <Routes>
-        {/* Main view route */}
-        <Route path="/" element={<MainView movies={movies} />} />
-
-        {/* Movie details route */}
-        <Route
-          path="/movie/:movieTitle"
-          element={<MovieDetails movies={movies} />}
-        />
-      </Routes>
-    </Router>
+    <div>
+      <h2>{movie.title}</h2>
+      <p>
+        <strong>Genre:</strong> {movie.genre}
+      </p>
+      <p>
+        <strong>Description:</strong> {movie.description}
+      </p>
+      <img
+        src={`/images/${movie.imagePath}`} // Display the poster here
+        alt={`${movie.title} Poster`}
+        style={{ width: '300px', height: 'auto' }}
+      />
+      <br />
+      <Link to="/">Back to Movie List</Link>
+    </div>
   );
 };
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
