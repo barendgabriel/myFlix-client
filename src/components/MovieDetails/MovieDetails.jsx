@@ -1,24 +1,33 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 export const MovieDetails = ({ movies }) => {
-  const { title } = useParams();
-  const navigate = useNavigate(); // Use navigate for going back to the list
+  const { movieTitle } = useParams(); // Get the movieTitle from the URL
+  const movie = movies.find((m) => m.title === decodeURIComponent(movieTitle)); // Match the movie
 
-  // Find the movie based on the title
-  const movie = movies.find((movie) => movie.title === title);
-
-  // If the movie is not found, show an error message
   if (!movie) {
-    return <p>Movie not found!</p>;
+    return <div>Movie not found!</div>; // Handle missing movie
   }
 
   return (
-    <div className="movie-details">
+    <div>
       <h2>{movie.title}</h2>
-      <p>Genre: {movie.genre}</p>
-      <p>{movie.description}</p>
-      <button onClick={() => navigate('/')}>Back to List</button>
+      <p>
+        <strong>Genre:</strong> {movie.genre}
+      </p>
+      <p>
+        <strong>Director:</strong> {movie.director} {/* Added director */}
+      </p>
+      <p>
+        <strong>Description:</strong> {movie.description}
+      </p>
+      <img
+        src={`/images/${movie.imagePath}`}
+        alt={`${movie.title} Poster`}
+        style={{ width: '300px', height: 'auto' }}
+      />
+      <br />
+      <Link to="/">Back to Movie List</Link>
     </div>
   );
 };
