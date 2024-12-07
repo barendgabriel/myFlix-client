@@ -8,7 +8,7 @@ export const MainView = ({ movies }) => {
       <h2>Movie List</h2>
       {movies.map((movie) => (
         <Link to={`/movie/${movie.title}`} key={movie.title}>
-          <MovieCard movie={movie} />
+          <h3>{movie.title}</h3> {/* Only display movie title */}
         </Link>
       ))}
     </div>
