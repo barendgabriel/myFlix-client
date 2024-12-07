@@ -1,46 +1,14 @@
-// src/components/MainView/MainView.jsx
-import React, { useState } from 'react';
-import { MovieCard } from '../MovieCard/MovieCard';
+// index.jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { MainView } from './components/MainView/MainView'; // Make sure the path is correct
 
-export const MainView = () => {
-  const [movies] = useState([
-    {
-      title: 'Evil Dead',
-      genre: 'Horror',
-      director: 'Sam Raimi',
-      description:
-        'Five friends travel to a cabin in the woods, where they unknowingly release demons.',
-      year: 1981,
-      imagePath: 'evil-dead.jpg',
-    },
-    {
-      title: 'Godzilla',
-      genre: 'Science Fiction',
-      director: 'Ishirō Honda',
-      description:
-        'A giant monster emerges from the sea, wreaking havoc across Japan.',
-      year: 1954,
-      imagePath: 'godzilla.jpg',
-    },
-    {
-      title: 'Jurassic Park',
-      genre: 'Adventure',
-      director: 'Steven Spielberg',
-      description:
-        'Dinosaurs are brought back to life in a theme park, with disastrous consequences.',
-      year: 1993,
-      imagePath: 'jurassic-park.jpg',
-    },
-  ]);
+ReactDOM.render(<MainView />, document.getElementById('root'));
+// components/MainView/MainView.jsx
+import React from 'react';
 
-  return (
-    <div>
-      <h1>Welcome to myFlix</h1>
-      <div>
-        {movies.map((movie) => (
-          <MovieCard key={movie.title} movie={movie} />
-        ))}
-      </div>
-    </div>
-  );
-};
+export class MainView extends React.Component {
+  render() {
+    return <h1>Movie List Loaded!</h1>; // Static message for now
+  }
+}
