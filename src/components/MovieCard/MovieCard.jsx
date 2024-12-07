@@ -1,15 +1,19 @@
+// src/components/MovieCard/MovieCard.jsx
 import React from 'react';
 
 export const MovieCard = ({ movie }) => {
   return (
-    <div>
+    <div
+      style={{
+        border: '1px solid #ccc',
+        padding: '10px',
+        margin: '10px',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        maxWidth: '200px',
+      }}
+    >
       <h3>{movie.title}</h3>
-      {/* Display the movie poster on click */}
-      <img
-        src={`/images/${movie.imagePath}`} // Correct path to images
-        alt={`${movie.title} Poster`} // Alt text for accessibility
-        style={{ width: '150px', height: 'auto' }} // Basic styling for image
-      />
     </div>
   );
 };
