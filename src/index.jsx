@@ -1,44 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+} from 'react-router-dom';
 
 // Movie List Component
-const MovieList = () => (
+const MovieList = ({ movies }) => (
   <div>
     <h1>Movie List</h1>
     <ul>
-      <li>
-        <Link to="/movies/Evil%20Dead">Evil Dead</Link>
-      </li>
-      <li>
-        <Link to="/movies/Godzilla">Godzilla</Link>
-      </li>
-      <li>
-        <Link to="/movies/Jurassic%20Park">Jurassic Park</Link>
-      </li>
+      {movies.map((movie) => (
+        <li key={movie.title}>
+          <Link to={`/movies/${encodeURIComponent(movie.title)}`}>
+            {movie.title}
+          </Link>
+        </li>
+      ))}
     </ul>
   </div>
 );
 
 // Movie Details Component
-const MovieDetails = ({ title, description, genre, director, year }) => (
-  <div>
-    <h1>{title}</h1>
-    <p>
-      <strong>Description:</strong> {description}
-    </p>
-    <p>
-      <strong>Genre:</strong> {genre}
-    </p>
-    <p>
-      <strong>Director:</strong> {director}
-    </p>
-    <p>
-      <strong>Year:</strong> {year}
-    </p>
-    <Link to="/">Back to Movie List</Link>
-  </div>
-);
+const MovieDetails = ({ movies }) => {
+  const { movieTitle } = useParams();
+  const movie = movies.find((m) => m.title === decodeURIComponent(movieTitle));
+
+  if (!movie) {
+    return <p>Movie not found!</p>;
+  }
+
+  const { title, description, genre, director, year } = movie;
+
+  return (
+    <div>
+      <h1>{title}</h1>
+      <p>
+        <strong>Description:</strong> {description}
+      </p>
+      <p>
+        <strong>Genre:</strong> {genre}
+      </p>
+      <p>
+        <strong>Director:</strong> {director}
+      </p>
+      <p>
+        <strong>Year:</strong> {year}
+      </p>
+      <Link to="/">Back to Movie List</Link>
+    </div>
+  );
+};
 
 // App Component
 const App = () => {
@@ -49,6 +64,7 @@ const App = () => {
       genre: 'Horror',
       director: 'Sam Raimi',
       year: 1981,
+      image: '/images/evil-dead.jpg', // Add image path
     },
     {
       title: 'Godzilla',
@@ -56,6 +72,7 @@ const App = () => {
       genre: 'Sci-Fi',
       director: 'Ishirō Honda',
       year: 1954,
+      image: '/images/godzilla.jpg', // Add image path
     },
     {
       title: 'Jurassic Park',
@@ -63,24 +80,17 @@ const App = () => {
       genre: 'Adventure',
       director: 'Steven Spielberg',
       year: 1993,
+      image: '/images/jurassic-park.jpg', // Add image path
     },
   ];
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MovieList />} />
+        <Route path="/" element={<MovieList movies={movies} />} />
         <Route
           path="/movies/:movieTitle"
-          element={
-            <MovieDetails
-              {...movies.find(
-                (movie) =>
-                  movie.title ===
-                  decodeURIComponent(window.location.pathname.split('/')[2])
-              )}
-            />
-          }
+          element={<MovieDetails movies={movies} />}
         />
       </Routes>
     </Router>
