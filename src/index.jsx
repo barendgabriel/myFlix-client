@@ -54,7 +54,7 @@ const App = () => {
       genre: 'Horror',
       director: 'Sam Raimi',
       year: 1981,
-      image: '/images/evil-dead.jpg', // Image path
+      image: '/images/evil-dead.jpg', // Correct image path
     },
     {
       title: 'Godzilla',
@@ -62,7 +62,7 @@ const App = () => {
       genre: 'Sci-Fi',
       director: 'Ishirō Honda',
       year: 1954,
-      image: '/images/godzilla.jpg', // Image path
+      image: '/images/godzilla.jpg', // Correct image path
     },
     {
       title: 'Jurassic Park',
@@ -70,7 +70,7 @@ const App = () => {
       genre: 'Adventure',
       director: 'Steven Spielberg',
       year: 1993,
-      image: '/images/jurassic-park.jpg', // Image path
+      image: '/images/jurassic-park.jpg', // Correct image path
     },
   ];
 
