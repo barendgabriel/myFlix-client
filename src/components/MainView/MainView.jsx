@@ -1,14 +1,24 @@
-// index.jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { MainView } from './components/MainView/MainView'; // Make sure the path is correct
-
-ReactDOM.render(<MainView />, document.getElementById('root'));
 // components/MainView/MainView.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export class MainView extends React.Component {
   render() {
-    return <h1>Movie List Loaded!</h1>; // Static message for now
+    return (
+      <div>
+        <h1>Movie List</h1>
+        <ul>
+          <li>
+            <Link to="/movies/Evil%20Dead">Evil Dead</Link>
+          </li>
+          <li>
+            <Link to="/movies/Godzilla">Godzilla</Link>
+          </li>
+          <li>
+            <Link to="/movies/Jurassic%20Park">Jurassic Park</Link>
+          </li>
+        </ul>
+      </div>
+    );
   }
 }
