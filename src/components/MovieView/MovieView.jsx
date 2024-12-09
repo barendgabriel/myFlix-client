@@ -1,9 +1,9 @@
-// src/components/MovieView/MovieView.jsx
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const MovieView = () => {
   const { movieTitle } = useParams();
+  const navigate = useNavigate(); // Hook for navigation
 
   // Movie data (replace with your actual movie data source)
   const movies = [
@@ -42,10 +42,10 @@ const MovieView = () => {
   }
 
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <h1>{movie.title}</h1>
       <img
-        src={`./images/${movie.image}`}
+        src={`/images/${movie.image}`}
         alt={movie.title}
         style={{ width: '300px', height: 'auto', marginBottom: '20px' }}
       />
@@ -61,6 +61,21 @@ const MovieView = () => {
       <p>
         <strong>Year:</strong> {movie.year}
       </p>
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/')}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#007BFF',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Back to Movie List
+      </button>
     </div>
   );
 };
