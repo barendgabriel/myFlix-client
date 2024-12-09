@@ -1,25 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useParams,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 // Movie List Component
-const MovieList = ({ movies }) => (
+const MovieList = () => (
   <div>
     <h1>Movie List</h1>
     <ul>
-      {movies.map((movie) => (
-        <li key={movie.title}>
-          <Link to={`/movies/${encodeURIComponent(movie.title)}`}>
-            {movie.title}
-          </Link>
-        </li>
-      ))}
+      <li>
+        <Link to="/movies/Evil%20Dead">Evil Dead</Link>
+      </li>
+      <li>
+        <Link to="/movies/Godzilla">Godzilla</Link>
+      </li>
+      <li>
+        <Link to="/movies/Jurassic%20Park">Jurassic Park</Link>
+      </li>
     </ul>
   </div>
 );
@@ -58,7 +54,7 @@ const App = () => {
       genre: 'Horror',
       director: 'Sam Raimi',
       year: 1981,
-      image: '/images/evil-dead.jpg', // Add image path
+      image: '/images/evil-dead.jpg', // Image path
     },
     {
       title: 'Godzilla',
@@ -66,7 +62,7 @@ const App = () => {
       genre: 'Sci-Fi',
       director: 'Ishirō Honda',
       year: 1954,
-      image: '/images/godzilla.jpg', // Add image path
+      image: '/images/godzilla.jpg', // Image path
     },
     {
       title: 'Jurassic Park',
@@ -74,17 +70,25 @@ const App = () => {
       genre: 'Adventure',
       director: 'Steven Spielberg',
       year: 1993,
-      image: '/images/jurassic-park.jpg', // Add image path
+      image: '/images/jurassic-park.jpg', // Image path
     },
   ];
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MovieList movies={movies} />} />
+        <Route path="/" element={<MovieList />} />
         <Route
           path="/movies/:movieTitle"
-          element={<MovieDetails movies={movies} />}
+          element={
+            <MovieDetails
+              {...movies.find(
+                (movie) =>
+                  movie.title ===
+                  decodeURIComponent(window.location.pathname.split('/')[2])
+              )}
+            />
+          }
         />
       </Routes>
     </Router>
