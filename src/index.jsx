@@ -54,7 +54,7 @@ const App = () => {
       genre: 'Horror',
       director: 'Sam Raimi',
       year: 1981,
-      image: '/images/evil-dead.jpg', // Correct image path
+      image: '/images/evil-dead.jpg',
     },
     {
       title: 'Godzilla',
@@ -62,7 +62,7 @@ const App = () => {
       genre: 'Sci-Fi',
       director: 'Ishirō Honda',
       year: 1954,
-      image: '/images/godzilla.jpg', // Correct image path
+      image: '/images/godzilla.jpg',
     },
     {
       title: 'Jurassic Park',
@@ -70,7 +70,7 @@ const App = () => {
       genre: 'Adventure',
       director: 'Steven Spielberg',
       year: 1993,
-      image: '/images/jurassic-park.jpg', // Correct image path
+      image: '/images/jurassic-park.jpg',
     },
   ];
 
@@ -84,11 +84,15 @@ const App = () => {
             const movieTitle = decodeURIComponent(
               window.location.pathname.split('/')[2]
             );
-            console.log(`Looking for movie with title: ${movieTitle}`); // Debugging line
+            console.log(`URL Path: ${window.location.pathname}`); // Log full path
+            console.log(`Decoded Movie Title: ${movieTitle}`); // Log decoded movie title
+
             const selectedMovie = movies.find(
               (movie) => movie.title === movieTitle
             );
-            console.log(selectedMovie); // To verify if the correct movie is found
+
+            console.log('Selected Movie:', selectedMovie); // Log selected movie or undefined
+
             return selectedMovie ? (
               <MovieDetails {...selectedMovie} />
             ) : (
