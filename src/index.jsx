@@ -54,7 +54,7 @@ const App = () => {
       genre: 'Horror',
       director: 'Sam Raimi',
       year: 1981,
-      image: '/images/evil-dead.jpg',
+      image: '/images/evil-dead.jpg', // Correct image path
     },
     {
       title: 'Godzilla',
@@ -62,7 +62,7 @@ const App = () => {
       genre: 'Sci-Fi',
       director: 'Ishirō Honda',
       year: 1954,
-      image: '/images/godzilla.jpg',
+      image: '/images/godzilla.jpg', // Correct image path
     },
     {
       title: 'Jurassic Park',
@@ -70,7 +70,7 @@ const App = () => {
       genre: 'Adventure',
       director: 'Steven Spielberg',
       year: 1993,
-      image: '/images/jurassic-park.jpg',
+      image: '/images/jurassic-park.jpg', // Correct image path
     },
   ];
 
@@ -80,25 +80,24 @@ const App = () => {
         <Route path="/" element={<MovieList />} />
         <Route
           path="/movies/:movieTitle"
-          element={(() => {
-            const movieTitle = decodeURIComponent(
-              window.location.pathname.split('/')[2]
-            );
-            console.log(`URL Path: ${window.location.pathname}`); // Log full path
-            console.log(`Decoded Movie Title: ${movieTitle}`); // Log decoded movie title
+          element={
+            <>
+              {/* Debugging: Log the movie title from URL */}
+              {console.log(
+                'Movie title from URL:',
+                decodeURIComponent(window.location.pathname.split('/')[2])
+              )}
 
-            const selectedMovie = movies.find(
-              (movie) => movie.title === movieTitle
-            );
-
-            console.log('Selected Movie:', selectedMovie); // Log selected movie or undefined
-
-            return selectedMovie ? (
-              <MovieDetails {...selectedMovie} />
-            ) : (
-              <div>Movie not found</div>
-            );
-          })()}
+              {/* Render movie details */}
+              <MovieDetails
+                {...movies.find(
+                  (movie) =>
+                    movie.title ===
+                    decodeURIComponent(window.location.pathname.split('/')[2])
+                )}
+              />
+            </>
+          }
         />
       </Routes>
     </Router>
