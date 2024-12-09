@@ -80,15 +80,21 @@ const App = () => {
         <Route path="/" element={<MovieList />} />
         <Route
           path="/movies/:movieTitle"
-          element={
-            <MovieDetails
-              {...movies.find(
-                (movie) =>
-                  movie.title ===
-                  decodeURIComponent(window.location.pathname.split('/')[2])
-              )}
-            />
-          }
+          element={(() => {
+            const movieTitle = decodeURIComponent(
+              window.location.pathname.split('/')[2]
+            );
+            console.log(`Looking for movie with title: ${movieTitle}`); // Debugging line
+            const selectedMovie = movies.find(
+              (movie) => movie.title === movieTitle
+            );
+            console.log(selectedMovie); // To verify if the correct movie is found
+            return selectedMovie ? (
+              <MovieDetails {...selectedMovie} />
+            ) : (
+              <div>Movie not found</div>
+            );
+          })()}
         />
       </Routes>
     </Router>
