@@ -25,35 +25,29 @@ const MovieList = ({ movies }) => (
 );
 
 // Movie Details Component
-const MovieDetails = ({ movies }) => {
-  const { movieTitle } = useParams();
-  const movie = movies.find((m) => m.title === decodeURIComponent(movieTitle));
-
-  if (!movie) {
-    return <p>Movie not found!</p>;
-  }
-
-  const { title, description, genre, director, year } = movie;
-
-  return (
-    <div>
-      <h1>{title}</h1>
-      <p>
-        <strong>Description:</strong> {description}
-      </p>
-      <p>
-        <strong>Genre:</strong> {genre}
-      </p>
-      <p>
-        <strong>Director:</strong> {director}
-      </p>
-      <p>
-        <strong>Year:</strong> {year}
-      </p>
-      <Link to="/">Back to Movie List</Link>
-    </div>
-  );
-};
+const MovieDetails = ({ title, description, genre, director, year, image }) => (
+  <div>
+    <h1>{title}</h1>
+    <img
+      src={image}
+      alt={title}
+      style={{ width: '300px', height: 'auto', marginBottom: '20px' }}
+    />
+    <p>
+      <strong>Description:</strong> {description}
+    </p>
+    <p>
+      <strong>Genre:</strong> {genre}
+    </p>
+    <p>
+      <strong>Director:</strong> {director}
+    </p>
+    <p>
+      <strong>Year:</strong> {year}
+    </p>
+    <Link to="/">Back to Movie List</Link>
+  </div>
+);
 
 // App Component
 const App = () => {
