@@ -1,95 +1,92 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-// Sample movie data
-const movies = [
-  {
-    title: 'Evil Dead',
-    description:
-      'A group of friends encounter supernatural forces at a remote cabin.',
-    genre: 'Horror',
-    director: 'Sam Raimi',
-    year: 1981,
-    imagePath: 'evil-dead.jpeg', // Ensure this image is in the correct directory
-  },
-  {
-    title: 'Godzilla',
-    description: 'A giant monster emerges and causes chaos in a major city.',
-    genre: 'Sci-Fi',
-    director: 'Ishirô Honda',
-    year: 1954,
-    imagePath: 'godzilla.jpeg', // Ensure this image is in the correct directory
-  },
-  {
-    title: 'Jurassic Park',
-    description:
-      'Scientists create a theme park with genetically engineered dinosaurs.',
-    genre: 'Adventure',
-    director: 'Steven Spielberg',
-    year: 1993,
-    imagePath: 'jurassic-park.png', // Ensure this image is in the correct directory
-  },
-];
+// Movie List Component
+const MovieList = () => (
+  <div>
+    <h1>Movie List</h1>
+    <ul>
+      <li>
+        <Link to="/movies/Evil%20Dead">Evil Dead</Link>
+      </li>
+      <li>
+        <Link to="/movies/Godzilla">Godzilla</Link>
+      </li>
+      <li>
+        <Link to="/movies/Jurassic%20Park">Jurassic Park</Link>
+      </li>
+    </ul>
+  </div>
+);
 
-// Movie List component
-const MovieList = () => {
-  return (
-    <div>
-      <h1>Movie List</h1>
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.title}>
-            <Link to={`/movies/${encodeURIComponent(movie.title)}`}>
-              {movie.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+// Movie Details Component
+const MovieDetails = ({ title, description, genre, director, year }) => (
+  <div>
+    <h1>{title}</h1>
+    <p>
+      <strong>Description:</strong> {description}
+    </p>
+    <p>
+      <strong>Genre:</strong> {genre}
+    </p>
+    <p>
+      <strong>Director:</strong> {director}
+    </p>
+    <p>
+      <strong>Year:</strong> {year}
+    </p>
+    <Link to="/">Back to Movie List</Link>
+  </div>
+);
 
-// Movie Details component
-const MovieDetails = ({ movies }) => {
-  const { movieTitle } = useParams(); // Get the movieTitle from the URL
-  const movie = movies.find((m) => m.title === decodeURIComponent(movieTitle)); // Match the movie
-
-  if (!movie) {
-    return <div>Movie not found!</div>; // Handle missing movie
-  }
-
-  return (
-    <div>
-      <h2>{movie.title}</h2>
-      <p>
-        <strong>Genre:</strong> {movie.genre}
-      </p>
-      <p>
-        <strong>Description:</strong> {movie.description}
-      </p>
-      <img
-        src={`/images/${movie.imagePath}`} // Display the poster here
-        alt={`${movie.title} Poster`}
-        style={{ width: '300px', height: 'auto' }}
-      />
-      <br />
-      <Link to="/">Back to Movie List</Link>
-    </div>
-  );
-};
-
+// App Component
 const App = () => {
+  const movies = [
+    {
+      title: 'Evil Dead',
+      description: 'A group of friends unleash an evil force.',
+      genre: 'Horror',
+      director: 'Sam Raimi',
+      year: 1981,
+    },
+    {
+      title: 'Godzilla',
+      description: 'A giant lizard wreaks havoc on a city.',
+      genre: 'Sci-Fi',
+      director: 'Ishirō Honda',
+      year: 1954,
+    },
+    {
+      title: 'Jurassic Park',
+      description: 'Dinosaurs are brought back to life.',
+      genre: 'Adventure',
+      director: 'Steven Spielberg',
+      year: 1993,
+    },
+  ];
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<MovieList />} />
         <Route
           path="/movies/:movieTitle"
-          element={<MovieDetails movies={movies} />}
+          element={
+            <MovieDetails
+              {...movies.find(
+                (movie) =>
+                  movie.title ===
+                  decodeURIComponent(window.location.pathname.split('/')[2])
+              )}
+            />
+          }
         />
       </Routes>
     </Router>
   );
 };
 
-export default App;
+// Render the App
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
