@@ -1,8 +1,9 @@
+// src/components/MainView/MainView.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MovieCard } from '../MovieCard/MovieCard';
 
-export const MainView = () => {
+const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -40,3 +41,5 @@ export const MainView = () => {
     </div>
   );
 };
+
+export default MainView;
