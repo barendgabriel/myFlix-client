@@ -13,7 +13,7 @@ const MovieView = () => {
       genre: 'Horror',
       director: 'Sam Raimi',
       year: 1981,
-      image: '/images/evil-dead.jpg',
+      image: 'evil-dead.jpg',
     },
     {
       title: 'Godzilla',
@@ -21,7 +21,7 @@ const MovieView = () => {
       genre: 'Sci-Fi',
       director: 'Ishirō Honda',
       year: 1954,
-      image: '/images/godzilla.jpg',
+      image: 'godzilla.jpg',
     },
     {
       title: 'Jurassic Park',
@@ -29,7 +29,7 @@ const MovieView = () => {
       genre: 'Adventure',
       director: 'Steven Spielberg',
       year: 1993,
-      image: '/images/jurassic-park.jpg',
+      image: 'jurassic-park.jpg',
     },
   ];
 
@@ -45,7 +45,7 @@ const MovieView = () => {
     <div>
       <h1>{movie.title}</h1>
       <img
-        src={movie.image}
+        src={`./images/${movie.image}`}
         alt={movie.title}
         style={{ width: '300px', height: 'auto', marginBottom: '20px' }}
       />
