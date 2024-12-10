@@ -9,8 +9,9 @@ const MainView = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    // Updated API URL to your Render hosted API
     axios
-      .get('https://movie_api/movies') // Replace with your API URL
+      .get('https://myflixmovieapp.onrender.com/movies') // Correct API URL
       .then((response) => {
         setMovies(response.data); // Assuming your API returns a 'data' array
         setLoading(false);

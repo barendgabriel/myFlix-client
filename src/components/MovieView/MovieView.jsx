@@ -1,44 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const MovieView = () => {
   const { movieTitle } = useParams();
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
+  const [movie, setMovie] = useState(null);
+  const [error, setError] = useState(null); // To handle errors if any occur
 
-  // Movie data (replace with your actual movie data source)
-  const movies = [
-    {
-      title: 'Evil Dead',
-      description: 'A group of friends unleash an evil force.',
-      genre: 'Horror',
-      director: 'Sam Raimi',
-      year: 1981,
-      image: 'evil-dead.jpg',
-    },
-    {
-      title: 'Godzilla',
-      description: 'A giant lizard wreaks havoc on a city.',
-      genre: 'Sci-Fi',
-      director: 'Ishirō Honda',
-      year: 1954,
-      image: 'godzilla.jpg',
-    },
-    {
-      title: 'Jurassic Park',
-      description: 'Dinosaurs are brought back to life.',
-      genre: 'Adventure',
-      director: 'Steven Spielberg',
-      year: 1993,
-      image: 'jurassic-park.jpg',
-    },
-  ];
+  useEffect(() => {
+    // Fetch movies from the API
+    fetch('https://myflixmovieapp.onrender.com/movies')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch movie data.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Find the movie by title
+        const selectedMovie = data.find(
+          (movie) => movie.title === decodeURIComponent(movieTitle)
+        );
+        if (!selectedMovie) {
+          setError('Movie not found.');
+        }
+        setMovie(selectedMovie);
+      })
+      .catch((err) => {
+        console.error('Error fetching movie data:', err);
+        setError('Failed to load movie details.');
+      });
+  }, [movieTitle]);
 
-  const movie = movies.find(
-    (movie) => movie.title === decodeURIComponent(movieTitle)
-  );
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   if (!movie) {
-    return <h2>Movie not found</h2>;
+    return <h2>Loading movie details...</h2>;
   }
 
   return (
@@ -61,7 +60,6 @@ const MovieView = () => {
       <p>
         <strong>Year:</strong> {movie.year}
       </p>
-      {/* Back Button */}
       <button
         onClick={() => navigate('/')}
         style={{
