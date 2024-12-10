@@ -1,60 +1,11 @@
 myFlix Client
-The myFlix Client is a React-based frontend for the movie application where users can view a list of movies and navigate to detailed views of each movie. This project demonstrates how to fetch data from an API, display it, and provide user navigation functionality.
+This is the client-side application for the myFlix movie app, built using React. The app allows users to view a list of movies fetched from an API. Each movie is displayed as a card with its title and image.
 
-Table of Contents
-Installation
-Usage
-Technologies
-Deployment
-Screenshots
-License
-Installation
-To get the myFlix Client up and running locally, follow the steps below:
-
-Clone the repository:
-bash
-Code kopieren
-git clone https://github.com/barendgabriel/myFlix-client.git
-Navigate to the project directory:
-bash
-Code kopieren
-cd myFlix-client
-Install the necessary dependencies:
-bash
-Code kopieren
-npm install
-Usage
-After installation, you can start the development server to run the app locally:
-
-bash
-Code kopieren
-npm start
-This will open the app in your default browser at http://localhost:1234.
-
-Once the app is running:
-
-The main page displays a list of movies with their titles and images.
-Clicking on a movie redirects you to the detailed view, showing the movie’s description, genre, director, and release year.
-A Back to Movie List button takes you back to the main movie list.
-Technologies
-React: JavaScript library for building user interfaces.
-Axios: Library for making HTTP requests to fetch movie data.
-React Router: For navigation between the pages of the app.
-CSS: For styling the app components.
-Deployment
-This app is deployed on Render.com, and you can access the live version at:
-
-https://myflixmovieapp.onrender.com
-
-Screenshots
-
-1. Movie List View:
-
-The main page where all movies are displayed.
-
-2. Movie Details View:
-
-The individual movie detail page.
-
-License
-This project is licensed under the MIT License.
+Current Functionality:
+Movie List: Displays a list of movies fetched from the API.
+Movie Cards: Each movie card shows the title and image of the movie.
+No Individual Movie View: Currently, you can only see the list of movies. Clicking on a movie does not display its detailed information yet.
+No Back Button: There is no functionality for returning to the movie list from a detailed movie view at the moment.
+Next Steps:
+Add Individual Movie View: Implement functionality to view detailed information about a single movie by clicking on a movie card.
+Add Back Button: Implement a back button that allows users to return to the movie list from the individual movie view.
