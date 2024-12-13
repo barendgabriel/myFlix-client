@@ -13,7 +13,11 @@ const MainView = () => {
   useEffect(() => {
     if (isLoggedIn) {
       axios
-        .get('https://myflixmovieapp.onrender.com/movies') // Correct API URL
+        .get('https://myflixmovieapp.onrender.com/movies', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
         .then((response) => {
           setMovies(response.data); // Assuming your API returns a 'data' array
           setLoading(false);
@@ -29,13 +33,21 @@ const MainView = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // Replace with actual login logic
+    localStorage.setItem('token', 'dummyToken'); // Replace with real token from API response
     setIsLoggedIn(true);
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
     // Replace with actual signup logic
+    localStorage.setItem('token', 'dummyToken'); // Replace with real token from API response
     setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setMovies([]); // Clear movies when logging out
   };
 
   if (!isLoggedIn) {
@@ -70,6 +82,7 @@ const MainView = () => {
 
   return (
     <div>
+      <button onClick={handleLogout}>Logout</button>
       <h1>Movies List</h1>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
         {movies.map((movie) => (
