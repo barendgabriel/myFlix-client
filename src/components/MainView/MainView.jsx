@@ -1,7 +1,15 @@
-// src/components/MainView/MainView.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MovieCard } from '../MovieCard/MovieCard';
+import {
+  Button,
+  Form,
+  Container,
+  Row,
+  Col,
+  Spinner,
+  Alert,
+} from 'react-bootstrap';
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
@@ -52,44 +60,91 @@ const MainView = () => {
 
   if (!isLoggedIn) {
     return (
-      <div>
-        <h1>{form === 'login' ? 'Login' : 'Signup'}</h1>
-        <form onSubmit={form === 'login' ? handleLogin : handleSignup}>
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-        <button onClick={() => setForm(form === 'login' ? 'signup' : 'login')}>
-          Switch to {form === 'login' ? 'Signup' : 'Login'}
-        </button>
-      </div>
+      <Container>
+        <Row className="justify-content-center">
+          <Col xs={12} md={6}>
+            <h1>{form === 'login' ? 'Login' : 'Signup'}</h1>
+            <Form onSubmit={form === 'login' ? handleLogin : handleSignup}>
+              <Form.Group className="mb-3" controlId="formUsername">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter username"
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter password"
+                  required
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+            <Button
+              variant="link"
+              onClick={() => setForm(form === 'login' ? 'signup' : 'login')}
+            >
+              Switch to {form === 'login' ? 'Signup' : 'Login'}
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 
   if (loading) {
-    return <div>Loading movies...</div>;
+    return (
+      <Container>
+        <Row className="justify-content-center">
+          <Col xs="auto">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </Col>
+        </Row>
+      </Container>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <Container>
+        <Row className="justify-content-center">
+          <Col xs="auto">
+            <Alert variant="danger">{error}</Alert>
+          </Col>
+        </Row>
+      </Container>
+    );
   }
 
   return (
-    <div>
-      <button onClick={handleLogout}>Logout</button>
-      <h1>Movies List</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+    <Container>
+      <Row className="mb-3">
+        <Col>
+          <Button variant="secondary" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h1>Movies List</h1>
+        </Col>
+      </Row>
+      <Row className="g-3">
         {movies.map((movie) => (
-          <MovieCard key={movie._id} movie={movie} />
+          <Col xs={12} sm={6} md={4} lg={3} key={movie._id}>
+            <MovieCard movie={movie} />
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 
