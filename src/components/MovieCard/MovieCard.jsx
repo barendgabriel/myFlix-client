@@ -15,7 +15,7 @@ export const MovieCard = ({ movie }) => {
     >
       <h3>{movie.title}</h3>
       <img
-        src={`./images/${movie.image}`}
+        src={movie.imageURL}
         alt={movie.title}
         style={{ width: '100%', height: 'auto' }}
       />
