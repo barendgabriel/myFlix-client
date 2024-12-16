@@ -15,8 +15,13 @@ const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Tracks if the user is logged in
+  const token = localStorage.getItem('token');
+  const [isLoggedIn, setIsLoggedIn] = useState(token ? true : false); // Tracks if the user is logged in
   const [form, setForm] = useState('login'); // Tracks whether to show login or signup form
+
+  // Login states
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -40,9 +45,20 @@ const MainView = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Replace with actual login logic
-    localStorage.setItem('token', 'dummyToken'); // Replace with real token from API response
-    setIsLoggedIn(true);
+    console.log(username, password);
+    axios
+      .post('https://myflixmovieapp.onrender.com/login', {
+        username,
+        password,
+      })
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        alert('Login failed!');
+        console.error('Login failed!', err);
+      });
   };
 
   const handleSignup = (e) => {
@@ -70,6 +86,8 @@ const MainView = () => {
                 <Form.Control
                   type="text"
                   placeholder="Enter username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </Form.Group>
@@ -78,6 +96,8 @@ const MainView = () => {
                 <Form.Control
                   type="password"
                   placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </Form.Group>
