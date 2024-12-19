@@ -4,10 +4,10 @@ import axios from 'axios';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { MovieCard } from '../MovieCard/MovieCard';
 import { MovieView } from '../MovieView/MovieView';
-import { NavigationBar } from '../NavigationBar/NavigationBar';
-import { ProfileView } from '../ProfileView/ProfileView';
-import { LoginView } from '../login-view/login-view'; // Updated import path
-import { SignupView } from '../SignupView/SignupView';
+import { NavigationBar } from '../NavigationBar/navigation-bar'; // Corrected import
+import { ProfileView } from '../ProfileView'; // Corrected import assuming ProfileView is in src/components/ProfileView.jsx
+import { LoginView } from '../LoginView/LoginView'; // Updated import for lowercase path
+import { SignupView } from '../SignupView/SignupView'; // Updated import for lowercase path
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
