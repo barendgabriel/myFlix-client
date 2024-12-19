@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from 'react-router-dom';
 import MainView from './components/MainView/MainView';
 import MovieView from './components/MovieView/MovieView';
+import LoginView from './components/LoginView/LoginView'; // Add the LoginView import
 
 // Main View Component to display the movie list
 const MainView = () => {
@@ -92,9 +99,27 @@ const MovieView = () => {
 
 // Main App Component with Routing
 const App = () => {
+  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem('jwt')); // Get JWT from localStorage on initial load
+
+  // Function to handle login success
+  const handleLogin = (token) => {
+    setToken(token); // Store token in state
+    localStorage.setItem('jwt', token); // Store token in localStorage
+    navigate('/'); // Redirect to main view after login
+  };
+
+  // If no token, show LoginView
+  if (!token) {
+    return <LoginView onLogin={handleLogin} />;
+  }
+
   return (
     <Router>
       <Routes>
+        {/* Login route */}
+        <Route path="/login" element={<LoginView onLogin={handleLogin} />} />
+
         {/* Main view for the movie list */}
         <Route path="/" element={<MainView />} />
 
