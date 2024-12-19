@@ -1,13 +1,12 @@
-// src/components/MainView/MainView.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { MovieCard } from '../MovieCard/MovieCard';
-import MovieView from '../MovieView/MovieView'; // Corrected import for MovieView
+import MovieView from '../MovieView/MovieView';
 import { NavigationBar } from '../NavigationBar/NavigationBar';
-import ProfileView from '../ProfileView/ProfileView'; // Importing the default export
-import LoginView from '../LoginView/LoginView'; // Importing the default export
-import SignupView from '../SignupView/SignupView'; // Importing the default export
+import ProfileView from '../ProfileView/ProfileView';
+import LoginView from '../LoginView/LoginView';
+import SignupView from '../SignupView/SignupView';
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
@@ -45,54 +44,51 @@ const MainView = () => {
     setMovies([]); // Clear movies when logging out
   };
 
-  if (!isLoggedIn) {
-    return (
-      <Router>
-        <NavigationBar isAuthenticated={isLoggedIn} />
-        <Routes>
-          <Route path="/" element={<LoginView onLoggedIn={handleLogin} />} />
-          <Route path="/signup" element={<SignupView />} />
-        </Routes>
-      </Router>
-    );
-  }
-
   return (
-    <Router>
+    <div>
       <NavigationBar isAuthenticated={isLoggedIn} />
       <Routes>
-        <Route
-          path="/movies"
-          element={
-            <div>
-              {loading ? (
-                <div>Loading movies...</div>
-              ) : error ? (
-                <div>{error}</div>
-              ) : (
+        {!isLoggedIn ? (
+          <>
+            <Route path="/" element={<LoginView onLoggedIn={handleLogin} />} />
+            <Route path="/signup" element={<SignupView />} />
+          </>
+        ) : (
+          <>
+            <Route
+              path="/movies"
+              element={
                 <div>
-                  <h1>Movies List</h1>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '10px',
-                    }}
-                  >
-                    {movies.map((movie) => (
-                      <MovieCard key={movie._id} movie={movie} />
-                    ))}
-                  </div>
+                  {loading ? (
+                    <div>Loading movies...</div>
+                  ) : error ? (
+                    <div>{error}</div>
+                  ) : (
+                    <div>
+                      <h1>Movies List</h1>
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '10px',
+                        }}
+                      >
+                        {movies.map((movie) => (
+                          <MovieCard key={movie._id} movie={movie} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          }
-        />
-        <Route path="/movies/:movieId" element={<MovieView />} />
-        <Route path="/profile" element={<ProfileView />} />
+              }
+            />
+            <Route path="/movies/:movieId" element={<MovieView />} />
+            <Route path="/profile" element={<ProfileView />} />
+          </>
+        )}
       </Routes>
-      <button onClick={handleLogout}>Logout</button>
-    </Router>
+      {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
+    </div>
   );
 };
 
