@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import { MovieCard } from '../MovieCard/MovieCard';
-import { MovieView } from '../MovieView/MovieView';
-import { NavigationBar } from '../NavigationBar/navigation-bar'; // Corrected import
-import { ProfileView } from '../ProfileView'; // Corrected import assuming ProfileView is in src/components/ProfileView.jsx
-import { LoginView } from '../LoginView/LoginView'; // Updated import for lowercase path
-import { SignupView } from '../SignupView/SignupView'; // Updated import for lowercase path
+import { MovieCard } from '../MovieCard/MovieCard'; // Ensure the casing is correct here
+import { MovieView } from '../MovieView/MovieView'; // Updated to reflect the correct casing
+import { NavigationBar } from '../NavigationBar/NavigationBar'; // Updated to reflect the correct casing
+import { ProfileView } from '../ProfileView/ProfileView'; // Updated to reflect the correct casing
+import { LoginView } from '../LoginView/LoginView'; // Updated to reflect the correct casing
+import { SignupView } from '../SignupView/SignupView'; // Updated to reflect the correct casing
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
