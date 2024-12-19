@@ -7,8 +7,10 @@ const LoginView = ({ onLogin }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch('https://your-api-url.com/login', {
+      // Updated URL to the local backend
+      const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,10 +24,10 @@ const LoginView = ({ onLogin }) => {
         onLogin(data.token); // Pass token to parent component
       } else {
         const error = await response.json();
-        setErrorMessage(error.message);
+        setErrorMessage(error.message); // Set error message from backend
       }
     } catch (error) {
-      setErrorMessage('Login failed. Please try again later.');
+      setErrorMessage('Login failed. Please try again later.'); // Handle network or other errors
     }
   };
 
@@ -51,7 +53,7 @@ const LoginView = ({ onLogin }) => {
             required
           />
         </div>
-        {errorMessage && <p>{errorMessage}</p>}
+        {errorMessage && <p>{errorMessage}</p>} {/* Display error message */}
         <button type="submit">Login</button>
       </form>
     </div>
