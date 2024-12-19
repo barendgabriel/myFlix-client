@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { MovieCard } from '../MovieCard/MovieCard';
-import { MovieView } from '../MovieView/MovieView';
+import MovieView from '../MovieView/MovieView'; // Corrected import for MovieView
 import { NavigationBar } from '../NavigationBar/NavigationBar';
 import ProfileView from '../ProfileView/ProfileView'; // Importing the default export
 import LoginView from '../LoginView/LoginView'; // Importing the default export
