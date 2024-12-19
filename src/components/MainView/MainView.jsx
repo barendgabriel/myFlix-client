@@ -6,7 +6,7 @@ import { MovieCard } from '../MovieCard/MovieCard';
 import { MovieView } from '../MovieView/MovieView';
 import { NavigationBar } from '../NavigationBar/NavigationBar';
 import { ProfileView } from '../ProfileView/ProfileView';
-import { LoginView } from '../LoginView/LoginView';
+import { LoginView } from '../login-view/login-view'; // Updated import path
 import { SignupView } from '../SignupView/SignupView';
 
 const MainView = () => {
