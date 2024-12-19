@@ -9,7 +9,7 @@ const App = () => {
     <Router>
       <Routes>
         {/* Main view for the movie list */}
-        <Route path="/" element={<MainView />} />
+        <Route path="*" element={<MainView />} />
 
         {/* Movie view for displaying details of a specific movie */}
         <Route path="/movies/:movieTitle" element={<MovieView />} />
