@@ -1,14 +1,19 @@
 // src/components/MainView/MainView.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import { MovieCard } from '../MovieCard/MovieCard';
+import { MovieView } from '../MovieView/MovieView';
+import { NavigationBar } from '../NavigationBar/NavigationBar';
+import { ProfileView } from '../ProfileView/ProfileView';
+import { LoginView } from '../LoginView/LoginView';
+import { SignupView } from '../SignupView/SignupView';
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Tracks if the user is logged in
-  const [form, setForm] = useState('login'); // Tracks whether to show login or signup form
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -28,19 +33,9 @@ const MainView = () => {
           setLoading(false);
         });
     }
-  }, [isLoggedIn]); // Fetch movies only if logged in
+  }, [isLoggedIn]);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Replace with actual login logic
-    localStorage.setItem('token', 'dummyToken'); // Replace with real token from API response
-    setIsLoggedIn(true);
-  };
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-    // Replace with actual signup logic
-    localStorage.setItem('token', 'dummyToken'); // Replace with real token from API response
+  const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
@@ -52,44 +47,52 @@ const MainView = () => {
 
   if (!isLoggedIn) {
     return (
-      <div>
-        <h1>{form === 'login' ? 'Login' : 'Signup'}</h1>
-        <form onSubmit={form === 'login' ? handleLogin : handleSignup}>
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-        <button onClick={() => setForm(form === 'login' ? 'signup' : 'login')}>
-          Switch to {form === 'login' ? 'Signup' : 'Login'}
-        </button>
-      </div>
+      <Router>
+        <NavigationBar isAuthenticated={isLoggedIn} />
+        <Routes>
+          <Route path="/" element={<LoginView onLoggedIn={handleLogin} />} />
+          <Route path="/signup" element={<SignupView />} />
+        </Routes>
+      </Router>
     );
   }
 
-  if (loading) {
-    return <div>Loading movies...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
-    <div>
+    <Router>
+      <NavigationBar isAuthenticated={isLoggedIn} />
+      <Routes>
+        <Route
+          path="/movies"
+          element={
+            <div>
+              {loading ? (
+                <div>Loading movies...</div>
+              ) : error ? (
+                <div>{error}</div>
+              ) : (
+                <div>
+                  <h1>Movies List</h1>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '10px',
+                    }}
+                  >
+                    {movies.map((movie) => (
+                      <MovieCard key={movie._id} movie={movie} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          }
+        />
+        <Route path="/movies/:movieId" element={<MovieView />} />
+        <Route path="/profile" element={<ProfileView />} />
+      </Routes>
       <button onClick={handleLogout}>Logout</button>
-      <h1>Movies List</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-        {movies.map((movie) => (
-          <MovieCard key={movie._id} movie={movie} />
-        ))}
-      </div>
-    </div>
+    </Router>
   );
 };
 
