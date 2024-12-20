@@ -48,6 +48,11 @@ const MainView = () => {
         {movies.map((movie) => (
           <div key={movie._id}>
             <h3>{movie.title}</h3>
+            <img
+              src={movie.imageUrl} // Ensure this property exists in your API response
+              alt={movie.title}
+              style={{ width: '200px', height: 'auto' }} // Adjust size as needed
+            />
             <p>{movie.description}</p>
             <Link to={`/movies/${movie.title}`}>View Details</Link>
           </div>
@@ -93,6 +98,11 @@ const MovieView = () => {
   return (
     <div>
       <h1>{movie.title}</h1>
+      <img
+        src={movie.imageUrl} // Ensure this property exists in your API response
+        alt={movie.title}
+        style={{ width: '300px', height: 'auto' }} // Adjust size as needed
+      />
       <p>{movie.description}</p>
       <p>Genre: {movie.genre.name}</p>
       <p>Director: {movie.director.name}</p>
@@ -109,18 +119,4 @@ const App = () => {
         {/* Main view for the movie list */}
         <Route path="/" element={<MainView />} />
 
-        {/* Movie view for displaying details of a specific movie */}
-        <Route path="/movies/:movieTitle" element={<MovieView />} />
-      </Routes>
-    </Router>
-  );
-};
-
-// Find the root element in index.html
-const rootElement = document.getElementById('root');
-
-// Create a root for React rendering
-const root = ReactDOM.createRoot(rootElement);
-
-// Render the main App component
-root.render(<App />);
+        {/* Movie view for displaying details of a specifi
