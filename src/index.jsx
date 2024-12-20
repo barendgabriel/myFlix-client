@@ -8,6 +8,9 @@ import {
   useParams,
 } from 'react-router-dom'; // Import useParams for MovieView
 
+// Base URL for the backend API
+const API_BASE_URL = 'https://myflixmovieapp.onrender.com'; // Update this with your Render backend URL
+
 // Main View Component to display the movie list
 const MainView = () => {
   const [movies, setMovies] = useState([]);
@@ -17,7 +20,7 @@ const MainView = () => {
     const fetchMovies = async () => {
       try {
         const token = localStorage.getItem('jwt'); // Get JWT from localStorage
-        const response = await fetch('http://localhost:3000/movies', {
+        const response = await fetch(`${API_BASE_URL}/movies`, {
           headers: {
             Authorization: `Bearer ${token}`, // Send token in the Authorization header
           },
@@ -40,7 +43,7 @@ const MainView = () => {
   return (
     <div>
       <h1>Movies List</h1>
-      {error && <p>Error: {error}</p>}
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       <div>
         {movies.map((movie) => (
           <div key={movie._id}>
@@ -63,9 +66,13 @@ const MovieView = () => {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/movies/${movieTitle}`
-        );
+        const token = localStorage.getItem('jwt'); // Get JWT from localStorage
+        const response = await fetch(`${API_BASE_URL}/movies/${movieTitle}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in the Authorization header
+          },
+        });
+
         if (!response.ok) {
           throw new Error('Failed to fetch movie details');
         }
@@ -79,7 +86,7 @@ const MovieView = () => {
     fetchMovie();
   }, [movieTitle]);
 
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   if (!movie) return <p>Loading...</p>;
 
@@ -87,9 +94,9 @@ const MovieView = () => {
     <div>
       <h1>{movie.title}</h1>
       <p>{movie.description}</p>
-      <p>{movie.genre}</p>
-      <p>{movie.director}</p>
-      <p>{movie.year}</p>
+      <p>Genre: {movie.genre.name}</p>
+      <p>Director: {movie.director.name}</p>
+      <p>Year: {movie.year}</p>
     </div>
   );
 };
@@ -98,8 +105,6 @@ const MovieView = () => {
 const App = () => {
   return (
     <Router>
-      {' '}
-      {/* Ensure Router wraps everything here */}
       <Routes>
         {/* Main view for the movie list */}
         <Route path="/" element={<MainView />} />
