@@ -119,4 +119,18 @@ const App = () => {
         {/* Main view for the movie list */}
         <Route path="/" element={<MainView />} />
 
-        {/* Movie view for displaying details of a specifi
+        {/* Movie view for displaying details of a specific movie */}
+        <Route path="/movies/:movieTitle" element={<MovieView />} />
+      </Routes>
+    </Router>
+  );
+};
+
+// Find the root element in index.html
+const rootElement = document.getElementById('root');
+
+// Create a root for React rendering
+const root = ReactDOM.createRoot(rootElement);
+
+// Render the main App component
+root.render(<App />);
