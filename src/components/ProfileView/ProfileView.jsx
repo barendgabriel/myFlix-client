@@ -8,9 +8,10 @@ const ProfileView = () => {
   const [newPassword, setNewPassword] = useState('');
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
     // Fetch user data from the backend API (MongoDB Atlas is already integrated with the backend)
     axios
-      .get('http://localhost:3000/api/profile', {
+      .get(`http://localhost:3000/users/${user.username}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       .then((response) => {
