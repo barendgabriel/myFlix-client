@@ -9,7 +9,7 @@ const MovieView = () => {
 
   useEffect(() => {
     // Fetch movies from the API
-    fetch('https://myflixmovieapp.onrender.com/movies')
+    fetch('http://localhost:3000/movies')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch movie data.');
