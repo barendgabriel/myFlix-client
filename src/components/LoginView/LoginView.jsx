@@ -20,13 +20,15 @@ const LoginView = ({ onLogin }) => {
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem('user', JSON.stringify(data.user)); // Store token in localStorage
         localStorage.setItem('token', data.token); // Store token in localStorage
-        onLogin(data.token); // Pass token to parent component
+        onLogin(data.user, data.token); // Pass token to parent component
       } else {
         const error = await response.json();
         setErrorMessage(error.message); // Set error message from backend
       }
     } catch (error) {
+      console.log(error);
       setErrorMessage('Login failed. Please try again later.'); // Handle network or other errors
     }
   };
