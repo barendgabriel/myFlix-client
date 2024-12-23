@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const NavigationBar = ({ isAuthenticated }) => (
+export const NavigationBar = ({ user, onLoggedOut }) => (
   <nav>
-    {!isAuthenticated ? (
+    {!user ? (
       <>
         <Link to="/">Login</Link>
         <Link to="/signup">Signup</Link>
       </>
     ) : (
       <>
+        <span>Welcome {user.username}</span>
         <Link to="/movies">Home</Link>
         <Link to="/profile">Profile</Link>
-        <Link to="/" onClick={() => localStorage.clear()}>
+        <Link to="/" onClick={onLoggedOut}>
           Logout
         </Link>
       </>
