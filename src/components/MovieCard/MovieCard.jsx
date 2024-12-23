@@ -20,7 +20,7 @@ export const MovieCard = ({ movie }) => {
         <h3>{movie.title}</h3>
         <img
           // Update image source to dynamically fetch the image from the server
-          src={`http://localhost:3000/images/${movie.imageId}`} // Assuming 'imageId' is stored in movie object
+          src={movie.imageURL} // Assuming 'imageId' is stored in movie object
           alt={movie.title}
           style={{ width: '100%', height: 'auto' }}
         />
