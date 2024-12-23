@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { MovieCard } from '../MovieCard/MovieCard';
 import MovieView from '../MovieView/MovieView';
 import { NavigationBar } from '../NavigationBar/NavigationBar';
@@ -12,51 +12,58 @@ const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const storedToken = localStorage.getItem('token');
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      axios
-        .get('https://myflixmovieapp.onrender.com/movies', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        })
-        .then((response) => {
-          setMovies(response.data); // Assuming your API returns a 'data' array
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
-          setError('Failed to fetch movies. Please try again.');
-          setLoading(false);
-        });
-    }
-  }, [isLoggedIn]);
+    if (!token) return;
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
+    axios
+      .get('http://localhost:3000/movies', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        console.log('Fetching movies successful');
+        setMovies(response.data); // Assuming your API returns a 'data' array
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to fetch movies. Please try again.');
+        setLoading(false);
+      });
+  }, [token]);
+
+  const handleLogin = (user, token) => {
+    setUser(user);
+    setToken(token);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('user');
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    setToken(null);
+    setUser(null);
     setMovies([]); // Clear movies when logging out
   };
 
   return (
-    <div>
-      <NavigationBar isAuthenticated={isLoggedIn} />
+    <BrowserRouter>
+      <NavigationBar user={user} onLoggedOut={handleLogout} />
       <Routes>
-        {!isLoggedIn ? (
+        {!token ? (
           <>
-            <Route path="/" element={<LoginView onLoggedIn={handleLogin} />} />
+            <Route path="/" element={<LoginView onLogin={handleLogin} />} />
             <Route path="/signup" element={<SignupView />} />
           </>
         ) : (
           <>
             <Route
-              path="/movies"
+              path="/"
               element={
                 <div>
                   {loading ? (
@@ -87,8 +94,7 @@ const MainView = () => {
           </>
         )}
       </Routes>
-      {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
-    </div>
+    </BrowserRouter>
   );
 };
 
