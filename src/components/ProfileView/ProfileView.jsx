@@ -6,12 +6,14 @@ const ProfileView = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newBirthday, setNewBirthday] = useState('');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     // Fetch user data from the backend API (MongoDB Atlas is already integrated with the backend)
     axios
-      .get(`http://localhost:3000/users/${user.username}`, {
+      .get(`https://myflixmovieapp.onrender.com/users/${user.username}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       .then((response) => {
@@ -28,16 +30,26 @@ const ProfileView = () => {
   };
 
   const handleSaveClick = () => {
+    if (newPassword == '') {
+      alert('Oops! Password is required.');
+      return;
+    }
     // Update user data through the backend API
     const updatedUserData = {
       username: newUsername || userData.username,
       password: newPassword || userData.password,
+      email: newEmail || userData.email,
+      birthday: newBirthday || userData.birthday,
     };
 
     axios
-      .put('http://localhost:3000/api/profile', updatedUserData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      })
+      .put(
+        `https://myflixmovieapp.onrender.com/users/${userData.username}`,
+        updatedUserData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        }
+      )
       .then((response) => {
         setUserData(response.data); // Update local state with the response
         setIsEditing(false);
@@ -69,8 +81,25 @@ const ProfileView = () => {
             <label>Password:</label>
             <input
               type="password"
-              value={newPassword || userData.password}
+              value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="text"
+              value={newEmail || userData.email}
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>Birthday:</label>
+            <input
+              type="text"
+              value={newBirthday || userData.birthday}
+              onChange={(e) => setNewBirthday(e.target.value)}
             />
           </div>
           <button onClick={handleSaveClick}>Save Changes</button>
@@ -83,6 +112,9 @@ const ProfileView = () => {
           </div>
           <div>
             <strong>Email:</strong> {userData.email}
+          </div>
+          <div>
+            <strong>Birthday:</strong> {userData.birthday}
           </div>
           <button onClick={handleEditClick}>Edit Profile</button>
         </div>

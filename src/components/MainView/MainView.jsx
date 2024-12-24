@@ -21,7 +21,7 @@ const MainView = () => {
     if (!token) return;
 
     axios
-      .get('http://localhost:3000/movies', {
+      .get('https://myflixmovieapp.onrender.com/movies', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
