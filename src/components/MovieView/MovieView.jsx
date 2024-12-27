@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const MovieView = () => {
-  const { movieTitle } = useParams();
+  const { movieId } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null); // To handle errors if any occur
 
   useEffect(() => {
     // Fetch movies from the API
-    fetch('https://myflixmovieapp.onrender.com/movies')
+    const token = localStorage.getItem('token');
+    fetch(`https://myflixmovieapp.onrender.com/movies/${movieId}`, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch movie data.');
@@ -17,20 +22,14 @@ const MovieView = () => {
         return response.json();
       })
       .then((data) => {
-        // Find the movie by title
-        const selectedMovie = data.find(
-          (movie) => movie.title === decodeURIComponent(movieTitle)
-        );
-        if (!selectedMovie) {
-          setError('Movie not found.');
-        }
-        setMovie(selectedMovie);
+        console.log('Movie from api', data);
+        setMovie(data);
       })
       .catch((err) => {
         console.error('Error fetching movie data:', err);
         setError('Failed to load movie details.');
       });
-  }, [movieTitle]);
+  }, [movieId]);
 
   if (error) {
     return <h2>{error}</h2>;
@@ -44,7 +43,7 @@ const MovieView = () => {
     <div style={{ padding: '20px' }}>
       <h1>{movie.title}</h1>
       <img
-        src={`/images/${movie.image}`}
+        src={movie.imageURL}
         alt={movie.title}
         style={{ width: '300px', height: 'auto', marginBottom: '20px' }}
       />
@@ -52,13 +51,10 @@ const MovieView = () => {
         <strong>Description:</strong> {movie.description}
       </p>
       <p>
-        <strong>Genre:</strong> {movie.genre}
+        <strong>Genre:</strong> {movie.genre.name}
       </p>
       <p>
-        <strong>Director:</strong> {movie.director}
-      </p>
-      <p>
-        <strong>Year:</strong> {movie.year}
+        <strong>Director:</strong> {movie.director.name}
       </p>
       <button
         onClick={() => navigate('/')}

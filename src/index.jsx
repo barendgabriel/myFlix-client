@@ -1,20 +1,16 @@
-// index.jsx
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainView from './components/MainView/MainView'; // Adjusted path
-import MovieView from './components/MovieView/MovieView'; // Adjusted path
+import MainView from './components/MainView/MainView';
+import { createRoot } from 'react-dom/client';
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainView />} />
-        <Route path="/movies/:movieTitle" element={<MovieView />} />
-      </Routes>
-    </Router>
-  );
+import './index.scss';
+
+const MyFlixApplication = () => {
+  return <MainView />;
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+// Finds the root of your app
+const container = document.querySelector('#root');
+const root = createRoot(container);
+
+// Tells React to render your app in the root DOM element
+root.render(<MyFlixApplication />);
