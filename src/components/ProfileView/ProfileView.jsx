@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Button, Form } from 'react-bootstrap';
+import moment from 'moment';
 
 const ProfileView = () => {
   const [userData, setUserData] = useState(null);
@@ -29,11 +31,9 @@ const ProfileView = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
-    if (newPassword == '') {
-      alert('Oops! Password is required.');
-      return;
-    }
+  const handleSaveClick = (e) => {
+    e.preventDefault();
+
     // Update user data through the backend API
     const updatedUserData = {
       username: newUsername || userData.username,
@@ -69,41 +69,56 @@ const ProfileView = () => {
       <h2>Profile View</h2>
       {isEditing ? (
         <div>
-          <div>
-            <label>Username:</label>
-            <input
-              type="text"
-              value={newUsername || userData.username}
-              onChange={(e) => setNewUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input
-              type="text"
-              value={newEmail || userData.email}
-              onChange={(e) => setNewEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>Birthday:</label>
-            <input
-              type="text"
-              value={newBirthday || userData.birthday}
-              onChange={(e) => setNewBirthday(e.target.value)}
-            />
-          </div>
-          <button onClick={handleSaveClick}>Save Changes</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
+          <form onSubmit={handleSaveClick}>
+            <Form.Group controlId="formUsername">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                type="text"
+                value={newUsername || userData.username}
+                onChange={(e) => setNewUsername(e.target.value)}
+                required
+                minLenght="5"
+              />
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                type="email"
+                value={newEmail || userData.email}
+                onChange={(e) => setNewEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="formBirthday">
+              <Form.Label>Birthday:</Form.Label>
+              <Form.Control
+                type="date"
+                value={moment(newBirthday || userData.birthday).format(
+                  'YYYY-MM-DD'
+                )}
+                onChange={(e) => setNewBirthday(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Save
+            </Button>
+            <Button
+              variant="default"
+              type="button"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+          </form>
         </div>
       ) : (
         <div>
@@ -114,7 +129,8 @@ const ProfileView = () => {
             <strong>Email:</strong> {userData.email}
           </div>
           <div>
-            <strong>Birthday:</strong> {userData.birthday}
+            <strong>Birthday:</strong>{' '}
+            {moment(userData.birthday).format('MMM Do YY')}
           </div>
           <button onClick={handleEditClick}>Edit Profile</button>
         </div>
