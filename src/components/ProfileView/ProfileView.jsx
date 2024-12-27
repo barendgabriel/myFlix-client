@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
 import moment from 'moment';
+import { MovieCard } from '../MovieCard/MovieCard';
 
-const ProfileView = () => {
+const ProfileView = ({ updateUser }) => {
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [newBirthday, setNewBirthday] = useState('');
+  const [favMovies, setFavMovies] = useState([]);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -26,6 +28,25 @@ const ProfileView = () => {
         // Handle error, e.g., show error message
       });
   }, []);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    // Fetch user data from the backend API (MongoDB Atlas is already integrated with the backend)
+    axios
+      .get(`https://myflixmovieapp.onrender.com/movies`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      })
+      .then((response) => {
+        const movies = response.data;
+        setFavMovies(
+          movies.filter((movie) => user.favorites.includes(movie._id))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+        // Handle error, e.g., show error message
+      });
+  }, [updateUser]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -135,6 +156,12 @@ const ProfileView = () => {
           <button onClick={handleEditClick}>Edit Profile</button>
         </div>
       )}
+      <div>
+        <h2 className="profile-title">Favorite movies</h2>
+        {favMovies.map((movie) => (
+          <MovieCard user={userData} movie={movie} updateUser={updateUser} />
+        ))}
+      </div>
     </div>
   );
 };

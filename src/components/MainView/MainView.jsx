@@ -38,6 +38,11 @@ const MainView = () => {
       });
   }, [token]);
 
+  const updateUser = (user) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  };
+
   const handleLogin = (user, token) => {
     setUser(user);
     setToken(token);
@@ -81,7 +86,12 @@ const MainView = () => {
                         }}
                       >
                         {movies.map((movie) => (
-                          <MovieCard key={movie._id} movie={movie} />
+                          <MovieCard
+                            key={movie._id}
+                            movie={movie}
+                            user={user}
+                            updateUser={updateUser}
+                          />
                         ))}
                       </div>
                     </div>
@@ -90,7 +100,10 @@ const MainView = () => {
               }
             />
             <Route path="/movies/:movieId" element={<MovieView />} />
-            <Route path="/profile" element={<ProfileView />} />
+            <Route
+              path="/profile"
+              element={<ProfileView updateUser={updateUser} />}
+            />
           </>
         )}
       </Routes>
