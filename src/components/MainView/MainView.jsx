@@ -7,6 +7,7 @@ import { NavigationBar } from '../NavigationBar/NavigationBar';
 import ProfileView from '../ProfileView/ProfileView';
 import LoginView from '../LoginView/LoginView';
 import SignupView from '../SignupView/SignupView';
+import { Container } from 'react-bootstrap';
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
@@ -59,54 +60,56 @@ const MainView = () => {
   return (
     <BrowserRouter>
       <NavigationBar user={user} onLoggedOut={handleLogout} />
-      <Routes>
-        {!token ? (
-          <>
-            <Route path="/" element={<LoginView onLogin={handleLogin} />} />
-            <Route path="/signup" element={<SignupView />} />
-          </>
-        ) : (
-          <>
-            <Route
-              path="/"
-              element={
-                <div>
-                  {loading ? (
-                    <div>Loading movies...</div>
-                  ) : error ? (
-                    <div>{error}</div>
-                  ) : (
-                    <div>
-                      <h1>Movies List</h1>
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: '10px',
-                        }}
-                      >
-                        {movies.map((movie) => (
-                          <MovieCard
-                            key={movie._id}
-                            movie={movie}
-                            user={user}
-                            updateUser={updateUser}
-                          />
-                        ))}
+      <Container>
+        <Routes>
+          {!token ? (
+            <>
+              <Route path="/" element={<LoginView onLogin={handleLogin} />} />
+              <Route path="/signup" element={<SignupView />} />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/"
+                element={
+                  <div>
+                    {loading ? (
+                      <div>Loading movies...</div>
+                    ) : error ? (
+                      <div>{error}</div>
+                    ) : (
+                      <div>
+                        <h1>Movies List</h1>
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '10px',
+                          }}
+                        >
+                          {movies.map((movie) => (
+                            <MovieCard
+                              key={movie._id}
+                              movie={movie}
+                              user={user}
+                              updateUser={updateUser}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              }
-            />
-            <Route path="/movies/:movieId" element={<MovieView />} />
-            <Route
-              path="/profile"
-              element={<ProfileView updateUser={updateUser} />}
-            />
-          </>
-        )}
-      </Routes>
+                    )}
+                  </div>
+                }
+              />
+              <Route path="/movies/:movieId" element={<MovieView />} />
+              <Route
+                path="/profile"
+                element={<ProfileView updateUser={updateUser} />}
+              />
+            </>
+          )}
+        </Routes>
+      </Container>
     </BrowserRouter>
   );
 };

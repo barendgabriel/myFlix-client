@@ -4,12 +4,14 @@ body {
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
-  line-height: 1.6; }
+  line-height: 1.6;
+}
 
 h1 {
   color: darkblue;
   font-size: 2rem;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
 
 button {
   padding: 10px 20px;
@@ -18,49 +20,62 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem; }
+  font-size: 1rem;
+}
 
 button:hover {
-  background-color: #0056b3; }
+  background-color: #0056b3;
+}
 
 /* Component-Specific Styles */
 .main-view {
-  padding: 20px; }
+  padding: 20px;
+}
 
 .movie-card {
   background-color: #fff;
   margin: 10px 0;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
 .movie-card h3 {
   margin: 0 0 10px;
-  color: #333; }
+  color: #333;
+}
 
 .movie-card p {
-  color: #666; }
+  color: #666;
+}
 
 /* Link Styles */
 a {
   color: #007bff;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 a:hover {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 /* Layout */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px; }
+  padding: 20px;
+}
 
 /* Responsive Styles */
 @media (max-width: 600px) {
   h1 {
-    font-size: 1.5rem; }
+    font-size: 1.5rem;
+  }
   button {
     padding: 8px 16px;
-    font-size: 0.9rem; }
+    font-size: 0.9rem;
+  }
   .movie-card {
-    padding: 10px; } }
+    padding: 10px;
+  }
+}
